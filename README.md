@@ -1,0 +1,2 @@
+AssetFocus.craftplugin
+======================
