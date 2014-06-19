@@ -1,0 +1,63 @@
+<div class="frame" style="position:relative;">
+	<img src="{{ url }}" style="max-width: 100%;">
+	<div class="selection" style="position: absolute; top: 20px; left: 20px; width: 100px; height: 100px; border: 5px solid black; background: rgba(0,0,0,0.6)">
+		<div class="handle n-handle" style="position: absolute; top: 0; left: 50%; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+		<div class="handle ne-handle" style="position: absolute; top: 0; right: 0; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+		<div class="handle e-handle" style="position: absolute; top: 50%; right: 0; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+		<div class="handle se-handle" style="position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+		<div class="handle s-handle" style="position: absolute; bottom: 0; left: 50%; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+		<div class="handle sw-handle" style="position: absolute; bottom: 0; left: 0; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+		<div class="handle w-handle" style="position: absolute; top: 50%; left: 0; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+		<div class="handle nw-handle" style="position: absolute; top: 0; left: 0; width: 10px; height: 10px; background: red; border: 1px solid yellow;"></div>
+	</div>
+</div>
+
+<textarea data-values name="{{ name }}">{{ value }}</textarea>
+
+<script type="text/javascript">
+	var dragging = false;
+	var target = false;
+
+	$(document).on('mousedown', '.handle', function(event) {
+		dragging = true;
+		target = $(this);
+	});
+
+	$(document).on('mouseup', '.handle', function(event) {
+		dragging = false;
+		target = false;
+	});
+
+	$(document).on('mousemove', function(event) {
+		if (dragging) {
+			var selection = $('.selection');
+			var width = event.pageX - selection.offset().left;
+			var height = event.pageY - selection.offset().top;
+			selection.css('width', width);
+			selection.css('height', height);
+
+			pic_real_width = 0;
+			pic_real_height = 0;
+			$("<img/>") // Make in memory copy of image to avoid css issues
+			    .attr("src", $('.frame img').attr("src"))
+			    .load(function() {
+			        pic_real_width = this.width;   // Note: $(this).width() will not
+			        pic_real_height = this.height; // work for in memory images.
+
+			        frame_width = $('.frame').width();
+			        frame_height = $('.frame').height();
+
+			        var pos = [
+			        	Math.floor(selection.position().left / frame_width * pic_real_width),
+			        	Math.floor(selection.position().left+selection.width() / frame_width * pic_real_width),
+			        	Math.floor(selection.position().top / frame_height * pic_real_height),
+			        	Math.floor(selection.position().top+selection.height() / frame_height * pic_real_height)
+			        ];
+
+			        $('[data-values]').val('{"medium":['+pos[0]+','+pos[1]+','+pos[2]+','+pos[3]+']}');
+			    });
+
+			
+		}
+	});
+</script>
