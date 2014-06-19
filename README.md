@@ -1,4 +1,4 @@
 AssetFocus.craftplugin
 ======================
 
-![screenshot](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![screenshot](https://raw.githubusercontent.com/markhuot/assetfocus.craftplugin/master/screenshot.png)
