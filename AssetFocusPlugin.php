@@ -27,7 +27,7 @@ class AssetFocusPlugin extends BasePlugin
     function init()
     {
         /**
-         * @todo `$content->focus` is wrong here. I actually need to loop through
+         * @todo `$content->assetFocus` is wrong here. I actually need to loop through
          * each of the model attributes and find all fields of type "Asset Focus" 
          * because who knows what content editors will name that field. I just
          * happened to name it "focus."
