@@ -36,7 +36,7 @@ class AssetFocusPlugin extends BasePlugin
             $content = $event->params['content'];
             $fileModel = craft()->assets->getFileById($content->elementId);
             if ($fileModel) {
-                $this->createThumb($fileModel, json_decode($content->focus, true));
+                $this->createThumb($fileModel, json_decode($content->assetFocus, true));
             }
         });
     }
